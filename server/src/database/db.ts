@@ -1,6 +1,7 @@
 import sqlite3 from 'sqlite3';
 import { createItemsTable } from '../models/items';
 import { initialize } from '../controllers/itemController';
+import { createCartTable } from '../models/cart';
 
 // Initialize SQLite connection
 let db: sqlite3.Database;
@@ -31,4 +32,5 @@ export const closeDB = () => {
 const initializeTables = async() => {
     await createItemsTable();
     initialize();
+    await createCartTable();
 };

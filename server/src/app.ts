@@ -1,7 +1,7 @@
 import express from "express";
 import { connectDB } from "./database/db";
 import itemRouter from "./routes/items";
-import { initialize } from "./controllers/itemController";
+import cartRouter from "./routes/cart";
 
 /**
  * Create a new express server application listening on the port specified.
@@ -9,9 +9,12 @@ import { initialize } from "./controllers/itemController";
 let port = 8887;
 let app = express();
 
-app.use('/items',itemRouter);
+app.use(express.json());
 
-app.listen(port, async() => {
+app.use("/items", itemRouter);
+app.use("/cart", cartRouter);
+
+app.listen(port, async () => {
   console.log(`Server has started and listening at port ${port}`);
   try {
     connectDB();
