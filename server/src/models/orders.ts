@@ -1,5 +1,6 @@
 import { Database } from "sqlite3";
 import { Item } from "../types/items";
+import { Order } from "../types/order";
 
 const db = new Database(":memory:");
 
@@ -23,9 +24,9 @@ export const createOrdersTable = () : Promise<void> => {
               });
 };
 
-export const getAllOrders = (): Promise<Item[]> => {
-  return new Promise<Item[]>((resolve, reject) => {
-    db.all(`SELECT * FROM orders`, [], (err: any, orders: Item[]) => {
+export const getAllOrders = (): Promise<Order[]> => {
+  return new Promise<Order[]>((resolve, reject) => {
+    db.all(`SELECT * FROM orders`, [], (err: any, orders: Order[]) => {
       if (err) {
         console.error("Error fetching orders:", err.message);
         reject(err);

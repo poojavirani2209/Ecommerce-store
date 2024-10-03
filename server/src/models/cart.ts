@@ -66,7 +66,11 @@ export const getItemsByCartId = (cartId: string): Promise<Item[]> => {
           console.error("Error fetching item:", err.message);
           reject(err);
         } else {
-          resolve(JSON.parse(cartDetails[0].items)); 
+          if(cartDetails[0]){
+            resolve(JSON.parse(cartDetails[0].items)); 
+          }else{
+            resolve([]);
+          }
         }
       }
     );
@@ -77,7 +81,7 @@ export const deleteCart = (cartId) => {
     db.all(
       `DELETE FROM cart WHERE id = ?`, 
       [cartId], 
-      (err: any, cartDetails: Cart) => {
+      (err: any) => {
         if (err) {
           console.error("Error fetching item:", err.message);
           reject(err);
