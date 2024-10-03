@@ -12,7 +12,7 @@ export const addItemsToCart = async (items: Item[], userId: string) => {
       `Error occurred while adding items to cart for userid ${userId}.`,
       error
     );
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -22,6 +22,6 @@ export const getAllItemsByCartId = async (cartId: string) => {
     return items;
   } catch (error) {
     console.error(`Error while getting items for cart by id ${cartId}`);
-    throw new Error(error);
+    throw error;
   }
 };

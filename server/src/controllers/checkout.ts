@@ -33,6 +33,7 @@ export const checkout = async (
 
     await saveOrderOnCheckout(userId, cartItems);
     await deleteCart(cartId);
+
     return {
       message: "Checked out successfully",
       totalAmount,
@@ -41,7 +42,8 @@ export const checkout = async (
       discountAmount,
     };
   } catch (error) {
-    console.error(error.message);
+    console.error(`Error occurred while checking out`, error.message);
+    throw error;
   }
 };
 

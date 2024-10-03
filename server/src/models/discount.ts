@@ -1,5 +1,4 @@
 import { Database } from "sqlite3";
-import { Item } from "../types/items";
 import { Discount, DiscountCodeStatus } from "../types/discount";
 
 const db = new Database(":memory:");
