@@ -1,7 +1,9 @@
-import { Item } from "./items";
-
 export interface Order {
-    id: string;
-    items: string;
-  }
-  
+  id: string;
+  items: string;
+}
+
+export interface OrdersSummary {
+  itemsPurchased: number;
+  totalItemsPurchasedAmount: number;
+}
