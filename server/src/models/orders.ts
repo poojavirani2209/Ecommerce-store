@@ -11,7 +11,8 @@ export const createOrdersTable = (): Promise<void> => {
             CREATE TABLE IF NOT EXISTS orders (
                 id TEXT PRIMARY KEY,
                 userId TEXT,
-                items TEXT
+                items TEXT,
+                discountAmount TEXT
                 )
         `,
       (err) => {
@@ -40,11 +41,16 @@ export const getAllOrders = (): Promise<Order[]> => {
   });
 };
 
-export const addNewOrder = (orderId: string, userId: string, items: Item[]) => {
+export const addNewOrder = (
+  orderId: string,
+  userId: string,
+  items: Item[],
+  discountAmount: number
+) => {
   return new Promise<void>((resolve, reject) => {
     db.run(
-      `INSERT INTO orders (id,userId,items) VALUES (?, ?,?)`,
-      [orderId, userId, JSON.stringify(items)],
+      `INSERT INTO orders (id,userId,items, discountAmount) VALUES (?, ?, ?,?)`,
+      [orderId, userId, JSON.stringify(items), discountAmount],
       (err) => {
         if (err) {
           console.error("Error inserting order:", err.message);
@@ -59,10 +65,10 @@ export const addNewOrder = (orderId: string, userId: string, items: Item[]) => {
 
 export const getOrderNumber = () => {
   return new Promise<number>((resolve, reject) => {
-    db.get("SELECT COUNT(*) as orderCount FROM orders", (err, row:any) => {
+    db.get("SELECT COUNT(*) as orderCount FROM orders", (err, row: any) => {
       if (err) {
         console.error("Error fetching order count:", err.message);
-        reject("Error fetching order count");
+        reject(err);
       } else {
         resolve(row.orderCount);
       }

@@ -31,7 +31,7 @@ export const checkout = async (
       totalAmount
     );
 
-    await saveOrderOnCheckout(userId, cartItems);
+    await saveOrderOnCheckout(userId, cartItems, discountAmount);
     await deleteCart(cartId);
 
     return {
@@ -47,8 +47,12 @@ export const checkout = async (
   }
 };
 
-const saveOrderOnCheckout = async (userId: string, cartItems: Item[]) => {
-  await addNewOrder(uuidv4(), userId, cartItems);
+const saveOrderOnCheckout = async (
+  userId: string,
+  cartItems: Item[],
+  discountAmount: number
+) => {
+  await addNewOrder(uuidv4(), userId, cartItems, discountAmount);
 };
 
 const validateDiscountCode = async (discountCode: string): Promise<number> => {

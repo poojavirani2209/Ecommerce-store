@@ -1,5 +1,7 @@
 import express from "express";
 import * as adminController from "../controllers/admin";
+import { GenerateDiscountSchema } from "../types/discount";
+import { validate } from "../common/validation";
 
 let adminRouter = express.Router();
 
@@ -8,27 +10,30 @@ adminRouter.get("/summary", async (req, res) => {
     const summary = await adminController.getAdminSummary();
     res.status(200).json(summary);
   } catch (error) {
-    res.status(500).json({ error });
+    res.status(500).json({
+      error: `Error occurred while getting order summary.`,
+      details: error,
+    });
   }
 });
 
 adminRouter.post("/generate-discount", async (req, res) => {
-  const { nthOrder } = req.body;
-  if (!nthOrder) {
-    res.status(400).json({ error: "nthOrder is required" });
-  }
-
   try {
-    const discountCode = await adminController.generateDiscountCode(
-      nthOrder
-    );
+    validate(GenerateDiscountSchema, req.body);
+    const { nthOrder } = req.body;
+    const discountCode = await adminController.generateDiscountCode(nthOrder);
     if (!discountCode) {
-      res.status(204).json({message:"Discount code not available for this order"});
+      res
+        .status(204)
+        .json({ message: "Discount code not available for this order" });
     } else {
       res.status(200).json({ discountCode });
     }
   } catch (error) {
-    res.status(500).json({ error });
+    res.status(500).json({
+      error: `Error occurred while generating discount code.`,
+      details: error.message,
+    });
   }
 });
 

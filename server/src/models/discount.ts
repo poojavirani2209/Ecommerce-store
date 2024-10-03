@@ -34,7 +34,7 @@ export const addNewDiscountCode = (code: string, percent: number) => {
       (error) => {
         if (error) {
           console.error("Error generating discount code:", error.message);
-          reject("Error generating discount code");
+          reject(error);
         } else {
           console.log(`Discount code ${code} generated`);
           resolve(code);
@@ -76,6 +76,23 @@ export const getDiscountByCode = async (discountCode: string) => {
           reject("Error fetching discount");
         }
         resolve(discount);
+      }
+    );
+  });
+};
+
+export const getAllDiscountsCodes = (): Promise<string[]> => {
+  return new Promise<string[]>((resolve, reject) => {
+    db.all(
+      `SELECT code FROM discount_codes`,
+      [],
+      (err: any, codes: string[]) => {
+        if (err) {
+          console.error("Error fetching discount codes:", err.message);
+          reject(err);
+        } else {
+          resolve(codes);
+        }
       }
     );
   });
