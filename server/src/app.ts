@@ -2,6 +2,7 @@ import express from "express";
 import { connectDB } from "./database/db";
 import itemRouter from "./routes/items";
 import cartRouter from "./routes/cart";
+import checkoutRouter from "./routes/checkout";
 
 /**
  * Create a new express server application listening on the port specified.
@@ -13,6 +14,7 @@ app.use(express.json());
 
 app.use("/items", itemRouter);
 app.use("/cart", cartRouter);
+app.use("/checkout", checkoutRouter);
 
 app.listen(port, async () => {
   console.log(`Server has started and listening at port ${port}`);
