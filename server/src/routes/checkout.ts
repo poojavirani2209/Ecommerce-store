@@ -5,9 +5,9 @@ let checkoutRouter = express.Router();
 
 checkoutRouter.post("/", async (req, res) => {
   try {
-    let { cartId, userId } = req.body;
-    let message = await checkoutController.checkout(cartId, userId);
-    res.status(200).json({ message });
+    let { cartId, userId, discountCode } = req.body;
+    let checkoutResponse = await checkoutController.checkout(cartId, userId,discountCode);
+    res.status(200).json({ ...checkoutResponse });
   } catch (error) {
     res.status(500).json({ error });
   }

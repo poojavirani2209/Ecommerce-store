@@ -59,7 +59,7 @@ export const addNewOrder = (orderId: string, userId: string, items: Item[]) => {
 
 export const getOrderNumber = () => {
   return new Promise<number>((resolve, reject) => {
-    db.get("SELECT COUNT(*) as orderCount FROM orders", (err, row) => {
+    db.get("SELECT COUNT(*) as orderCount FROM orders", (err, row:any) => {
       if (err) {
         console.error("Error fetching order count:", err.message);
         reject("Error fetching order count");

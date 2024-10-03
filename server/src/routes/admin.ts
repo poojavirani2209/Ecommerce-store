@@ -13,17 +13,17 @@ adminRouter.get("/summary", async (req, res) => {
 });
 
 adminRouter.post("/generate-discount", async (req, res) => {
-  const { orderToConsiderForDiscount } = req.body;
-  if (!orderToConsiderForDiscount) {
+  const { nthOrder } = req.body;
+  if (!nthOrder) {
     res.status(400).json({ error: "nthOrder is required" });
   }
 
   try {
     const discountCode = await adminController.generateDiscountCode(
-      orderToConsiderForDiscount
+      nthOrder
     );
     if (!discountCode) {
-      res.status(204);
+      res.status(204).json({message:"Discount code not available for this order"});
     } else {
       res.status(200).json({ discountCode });
     }

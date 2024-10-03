@@ -3,3 +3,9 @@ export interface Discount{
     code:string;
     percent:number;
 }
+
+export enum DiscountCodeStatus{
+    AVAILABLE="AVAILABLE",
+    USED="USED",
+    EXPIRED="EXPIRED"
+}

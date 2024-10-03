@@ -1,5 +1,6 @@
 import { Database } from "sqlite3";
 import { Item } from "../types/items";
+import { Discount, DiscountCodeStatus } from "../types/discount";
 
 const db = new Database(":memory:");
 
@@ -10,7 +11,7 @@ export const createDiscountCodesTable = (): Promise<void> => {
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             code TEXT NOT NULL,
             percent INTEGER NOT NULL,
-            used INTEGER,
+            status TEXT
       )
         `,
       (err) => {
@@ -29,8 +30,8 @@ export const createDiscountCodesTable = (): Promise<void> => {
 export const addNewDiscountCode = (code: string, percent: number) => {
   return new Promise<string>((resolve, reject) => {
     db.run(
-      "INSERT INTO discount_codes (code, percent,used) VALUES (?, ?,?)",
-      [code, percent, 0],
+      "INSERT INTO discount_codes (code, percent,status) VALUES (?, ?,?)",
+      [code, percent, DiscountCodeStatus.AVAILABLE],
       (error) => {
         if (error) {
           console.error("Error generating discount code:", error.message);
@@ -44,15 +45,39 @@ export const addNewDiscountCode = (code: string, percent: number) => {
   });
 };
 
-export const getOrderNumber = () => {
-  return new Promise<number>((resolve, reject) => {
-    db.get("SELECT COUNT(*) as orderCount FROM orders", (err, row) => {
-      if (err) {
-        console.error("Error fetching order count:", err.message);
-        reject("Error fetching order count");
-      } else {
-        resolve(row.orderCount);
+export const updateDiscountStatus = (
+  discount: Discount,
+  newStatus: DiscountCodeStatus
+) => {
+  return new Promise<DiscountCodeStatus>((resolve, reject) => {
+    db.run(
+      "INSERT or REPLACE INTO discount_codes (id, code, percent,status) VALUES (?, ?, ?, ?)",
+      [discount.id, discount.code, discount.percent, newStatus],
+      (error) => {
+        if (error) {
+          console.error("Error updating discount status:", error.message);
+          reject("Error updating discount status");
+        } else {
+          console.log(`Discount status updated`);
+          resolve(newStatus);
+        }
       }
-    });
+    );
+  });
+};
+
+export const getDiscountByCode = async (discountCode: string) => {
+  return new Promise<Discount>(async (resolve, reject) => {
+    db.get(
+      "SELECT * FROM discount_codes WHERE code = ?",
+      [discountCode],
+      (err, discount: Discount) => {
+        if (err) {
+          console.error("Error fetching discount", err.message);
+          reject("Error fetching discount");
+        }
+        resolve(discount);
+      }
+    );
   });
 };
