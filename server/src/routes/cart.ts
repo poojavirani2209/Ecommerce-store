@@ -1,29 +1,37 @@
-import express from "express";
+import express, { NextFunction, Request, Response } from "express";
 import * as cartController from "../controllers/cart";
+import { validate } from "../common/validation";
+import { addItemsToCartSchema, getCartSchema } from "../types/cart";
 
 let cartRouter = express.Router();
 
 cartRouter.post("/add", async (req, res) => {
-  const { item, userId } = req.body; //TODO need to get current logged in user
-
-  //TODO validate inputs
   try {
-    let cartId = await cartController.addItemsToCart([item], userId);
-    res.status(200).json({cartId});
+    validate(addItemsToCartSchema, req.body);
+    const { items, userId } = req.body;
+
+    let cartId = await cartController.addItemsToCart(items, userId);
+    res.status(200).json({ cartId });
   } catch (error) {
-    res.status(500).json({ error });
+    res.status(500).json({
+      error: `Error occurred while adding item to cart.`,
+      details: error.message,
+    });
   }
 });
 
 cartRouter.get("/:cartId", async (req, res) => {
-  const { cartId } = req.params; 
-
-  //TODO validate inputs
   try {
+    validate(getCartSchema, req.params);
+    const { cartId } = req.params;
+
     let items = await cartController.getAllItemsByCartId(cartId);
     res.status(200).json({ items });
   } catch (error) {
-    res.status(500).json({ error });
+    res.status(500).json({
+      error: `Error occurred while getting items from cart.`,
+      details: error.message,
+    });
   }
 });
 export default cartRouter;

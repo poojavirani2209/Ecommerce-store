@@ -58,7 +58,8 @@ const validateDiscountCode = async (discountCode: string): Promise<number> => {
     return 0;
   }
 };
-async function applyDiscount(discountCode: string, totalAmount: number) {
+
+const applyDiscount = async (discountCode: string, totalAmount: number) => {
   let discountPercent = await getDiscountPercent(discountCode);
   let discountAmount = (totalAmount * discountPercent) / 100;
   return {
@@ -66,15 +67,15 @@ async function applyDiscount(discountCode: string, totalAmount: number) {
     discountPercent,
     discountAmount,
   };
-}
+};
 
-function getTotalAmount(cartItems: Item[]) {
+const getTotalAmount = (cartItems: Item[]) => {
   let totalAmount = 0;
   cartItems.forEach((item) => {
     totalAmount += item.price;
   });
   return totalAmount;
-}
+};
 
 async function getDiscountPercent(discountCode: string) {
   let discountPercent = 0;
