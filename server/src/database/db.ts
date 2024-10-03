@@ -8,7 +8,7 @@ import { createDiscountCodesTable } from '../models/discount';
 // Initialize SQLite connection
 let db: sqlite3.Database;
 
-export const connectDB = () => {
+export const connectDB = async() => {
   db = new sqlite3.Database(':memory:',async  (err) => {
     if (err) {
       console.error('Error opening SQLite database:', err.message);
@@ -33,7 +33,7 @@ export const closeDB = () => {
 
 const initializeTables = async() => {
     await createItemsTable();
-    initialize();
+    await initialize();
     await createCartTable();
     await createOrdersTable();
     await createDiscountCodesTable();

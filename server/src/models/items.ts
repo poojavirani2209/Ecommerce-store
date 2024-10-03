@@ -3,29 +3,31 @@ import { Item } from "../types/items";
 
 const db = new Database(":memory:");
 
-export const createItemsTable = () : Promise<void> => {
-    return new Promise((resolve, reject) => {
-        db.run(`
+export const createItemsTable = (): Promise<void> => {
+  return new Promise((resolve, reject) => {
+    db.run(
+      `
           CREATE TABLE IF NOT EXISTS items (
             id TEXT PRIMARY KEY,
             name TEXT NOT NULL,
             price REAL NOT NULL,
             category TEXT NOT NULL
           )
-        `, (err) => {
-          if (err) {
-            console.error('Error creating items table:', err.message);
-            reject(err);
-          } else {
-            console.log('Items table created.');
-            resolve();
-          }
-        });
-        
-        // Additional table creation logic can go here
-      });
-};
+        `,
+      (err) => {
+        if (err) {
+          console.error("Error creating items table:", err.message);
+          reject(err);
+        } else {
+          console.log("Items table created.");
+          resolve();
+        }
+      }
+    );
 
+    // Additional table creation logic can go here
+  });
+};
 
 export const addNewItem = (item: Item) => {
   return new Promise<void>((resolve, reject) => {
@@ -57,15 +59,19 @@ export const getAllItems = (): Promise<Item[]> => {
   });
 };
 
-export const getItemById = (id:string): Promise<Item> => {
-  return new Promise<Item>((resolve, reject) => {
-    db.all(`SELECT * FROM items Where id like ${id}`, [], (err: any, item: Item) => {
-      if (err) {
-        console.error("Error fetching item:", err.message);
-        reject(err);
-      } else {
-        resolve(item);
+export const getItemById = (id: string): Promise<Item[]> => {
+  return new Promise<Item[]>((resolve, reject) => {
+    db.all(
+      `SELECT * FROM items Where id = ${id}`,
+      [],
+      (err: any, rows: any) => {
+        if (err) {
+          console.error("Error fetching item:", err.message);
+          reject(err);
+        } else {
+          resolve(rows);
+        }
       }
-    });
+    );
   });
 };

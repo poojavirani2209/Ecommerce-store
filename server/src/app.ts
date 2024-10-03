@@ -5,7 +5,6 @@ import cartRouter from "./routes/cart";
 import checkoutRouter from "./routes/checkout";
 import adminRouter from "./routes/admin";
 
-
 /**
  * Create a new express server application listening on the port specified.
  */
@@ -19,11 +18,15 @@ app.use("/cart", cartRouter);
 app.use("/checkout", checkoutRouter);
 app.use("/admin", adminRouter);
 
-app.listen(port, async () => {
-  console.log(`Server has started and listening at port ${port}`);
-  try {
-    connectDB();
-  } catch (error: any) {
-    console.log(error);
-  }
-});
+export const startApp = async() => {
+  app.listen(port, async () => {
+    console.log(`Server has started and listening at port ${port}`);
+    try {
+      await connectDB();
+    } catch (error: any) {
+      console.log(error);
+    }
+  });
+};
+
+export default app;
