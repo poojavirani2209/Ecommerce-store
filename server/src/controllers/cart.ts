@@ -11,7 +11,7 @@ export const addItemsToCart = async (items: Item[], userId: string) => {
 
 export const getAllItemsByCartId = async (cartId: string) => {
   try {
-    let items: string = await getItemsByCartId(cartId);
+    let items: Item[] = await getItemsByCartId(cartId);
     return items;
   } catch (err) {
     console.error(`Error while getting items for cart by id ${cartId}`);
