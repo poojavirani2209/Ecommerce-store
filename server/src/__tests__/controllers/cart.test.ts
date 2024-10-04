@@ -19,13 +19,19 @@ const mockItems: Item[] = [
   },
 ];
 
+afterEach(() => {
+  jest.clearAllMocks();
+});
+
 describe("Add items to cart", () => {
   const userId = "user123";
   const cartId = `cart-${userId}`;
 
   it("Given existing userId and items, it should add items to the cart and return the cartId", async () => {
-    let spied = jest.spyOn(dbMethods, "addItemToCart");
-    spied.mockResolvedValue();
+    let getItemsSpied = jest.spyOn(dbMethods, "getItemsByCartId");
+    getItemsSpied.mockResolvedValue(mockItems);
+    let addItemsSpied = jest.spyOn(dbMethods, "addItemToCart");
+    addItemsSpied.mockResolvedValue();
 
     const response = await request(app)
       .post("/cart/add")
@@ -33,7 +39,10 @@ describe("Add items to cart", () => {
 
     expect(response.status).toBe(200);
     expect(response.body).toEqual({ cartId });
-    expect(spied).toHaveBeenCalledWith(cartId, mockItems);
+    expect(addItemsSpied).toHaveBeenCalledWith(cartId, [
+      ...mockItems,
+      ...mockItems,
+    ]);
   });
 
   it("Given invalid input for items, it should return an error response", async () => {
@@ -61,8 +70,9 @@ describe("Add items to cart", () => {
   });
 
   it("Given cart table does not exist in database, then a failure response specifying internal server error should be sent.", async () => {
-    let spied = jest.spyOn(dbMethods, "addItemToCart");
-    spied.mockRejectedValue(new Error(`Table does not exists.`));
+    let getItemsSpied = jest.spyOn(dbMethods, "getItemsByCartId");
+    getItemsSpied.mockRejectedValue(`Table does not exists.`);
+
 
     const response = await request(app)
       .get("/cart/add")
@@ -85,16 +95,16 @@ describe("Get items from cart", () => {
     expect(spied).toHaveBeenCalledWith(cartId);
   });
 
-//TODO
-//   it("Given invalid input for cartId, it should return a error response", async () => {
-//     const response = await request(app).get("/cart/"); 
+  //TODO
+  //   it("Given invalid input for cartId, it should return a error response", async () => {
+  //     const response = await request(app).get("/cart/");
 
-//     expect(response.status).toBe(500);
-//     expect(response.body).toEqual({
-//       details: '"cartId" must be a string',
-//       error: "Error occurred while adding item to cart.",
-//     });
-//   });
+  //     expect(response.status).toBe(500);
+  //     expect(response.body).toEqual({
+  //       details: '"cartId" must be a string',
+  //       error: "Error occurred while adding item to cart.",
+  //     });
+  //   });
 
   it("Given cart table does not exist in database, then a failure response specifying internal server error should be sent.", async () => {
     let spied = jest.spyOn(dbMethods, "getItemsByCartId");

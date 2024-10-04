@@ -4,7 +4,8 @@ import { Item } from "../types/items";
 export const addItemsToCart = async (items: Item[], userId: string) => {
   try {
     const cartId = `cart-${userId}`;
-    await addItemToCart(cartId, items);
+    let alreadyExistingItems = await getItemsByCartId(cartId);
+    await addItemToCart(cartId, [...alreadyExistingItems, ...items]);
     console.log(`Items added to cart`);
     return cartId;
   } catch (error) {

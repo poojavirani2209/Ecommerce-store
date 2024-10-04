@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const ItemList = () => {
+const ItemList = ({ userId, onItemAddedToCart }) => {
   const [items, setItems] = useState([]);
-  const [userId, setUserId] = useState('user-123'); // Hardcoded user ID for now
   const [cartId, setCartId] = useState(null);
   const [error, setError] = useState(null);
 
@@ -22,11 +21,12 @@ const ItemList = () => {
 
   const addToCart = async (item) => {
     try {
-      const response = await axios.post('http://localhost:3000/cart/add', {
+      const response = await axios.post('http://localhost:8887/cart/add', {
         userId,
         items: [item],
       });
       setCartId(response.data.cartId);
+      onItemAddedToCart();
       setError(null);
     } catch (err) {
       setError(err.response?.data?.error || 'Failed to add item to cart');
