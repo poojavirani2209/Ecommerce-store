@@ -2,6 +2,7 @@ import { useState } from "react";
 import "./App.css";
 import Cart from "./components/CartItems";
 import ItemList from "./components/ItemsList";
+import AdminOrderSummary from "./components/AdminOrderSummary";
 
 function App() {
   const [userId, setUserId] = useState("1"); // Hardcoded user ID for now
@@ -19,6 +20,7 @@ function App() {
         refreshCart={refreshCart}
         setRefreshCart={setRefreshCart}
       />
+      <AdminOrderSummary />
     </div>
   );
 }
