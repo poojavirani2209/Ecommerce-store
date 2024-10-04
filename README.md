@@ -83,18 +83,75 @@ The following database schema outlines the tables used in the application:
 | status      | TEXT      | if it is available, expired or used     |
 | percent     | INTEGER   | discount percent assigned with the code |
 
-
-## Setup
+# **Project Setup**
 
 ### Prerequisites
 
-- Node.js
-- npm
+- Node.js 
 
-### Installation
+### Clone the project
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/poojavirani2209/Ecommerce-store.git
-   cd Ecommerce-store
-   ```
+```bash
+  git clone https://github.com/poojavirani2209/Ecommerce-store
+```
+
+### Navigate to the project directory
+
+```bash
+  cd Ecommerce-store
+```
+
+### Install dependencies for frontend and backend separately
+
+**Tip:** To efficiently install dependencies for both frontend and backend simultaneously, use split terminals.
+
+Install frontend dependencies
+
+```bash
+cd client
+npm install
+```
+
+Install backend dependencies
+
+```bash
+cd server
+npm install
+```
+
+### Running Development Servers
+
+**Important:**
+
+- **Separate terminals**: Run the commands in separate terminal windows or use `split terminal` to avoid conflicts.
+
+#### Start the backend server
+
+- Navigate to the `server` directory: `cd server`
+- Start the server: `npm run start` 
+- You should see a message indicating the server is running, usually on port 8887.
+
+#### Start the frontend server:
+
+- Navigate to the `client` directory: `cd client`
+- Start the server: `npm start`
+- You should see a message indicating the server is running, usually on port 3000.
+
+### Login with demo users
+
+Use the following userId:
+- You can use - user1,user2,user3 as customers of ecommerce store 
+- You can use - admin for admin functionalities like seeing the order summary.
+
+### Accessing the Application
+
+Once both servers are running, you can access them at the following URL's:
+
+- Client: http://localhost:3000
+- Server: http://localhost:8887
+
+## PostMan Collection
+
+## Authors
+
+- [@PoojaVirani](https://github.com/poojavirani2209)
