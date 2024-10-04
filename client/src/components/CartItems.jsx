@@ -5,7 +5,7 @@ const Cart = ({ userId, refreshCart, setRefreshCart }) => {
   const [cartItems, setCartItems] = useState([]);
   const [totalAmount, setTotalAmount] = useState(0);
   const [checkoutMessage, setCheckoutMessage] = useState(null);
-
+  const [discountCode, setDiscountCode] = useState(null);
 
   useEffect(() => {
     async function fetchCartItems() {
@@ -31,12 +31,16 @@ const Cart = ({ userId, refreshCart, setRefreshCart }) => {
       const response = await axios.post(`http://localhost:8887/checkout`, {
         userId,
         cartId: `cart-${userId}`,
-        discountCode: null,
+        discountCode,
       });
       setCheckoutMessage(`Checkout successful! Total Amount: $${response.data.totalAmount}`);
     } catch (error) {
       setCheckoutMessage('Error during checkout');
     }
+  };
+
+  const handleDiscountChange = (e) => {
+    setDiscountCode(e.target.value);
   };
 
 
@@ -54,9 +58,20 @@ const Cart = ({ userId, refreshCart, setRefreshCart }) => {
               </li>
             ))}
           </ul>
+
           <p>Total: ${totalAmount}</p>
+
+
+          <input
+            type="text"
+            placeholder="Discount Code"
+            value={discountCode}
+            onChange={handleDiscountChange}
+          />
           <button onClick={handleCheckout}>Checkout</button>
+
           {checkoutMessage && <p>{checkoutMessage}</p>}
+
         </>
       )}
     </div>
