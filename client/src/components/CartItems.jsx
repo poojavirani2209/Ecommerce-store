@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-const Cart = ({ userId,refreshCart, setRefreshCart }) => {
+const Cart = ({ userId, refreshCart, setRefreshCart }) => {
   const [cartItems, setCartItems] = useState([]);
   const [totalAmount, setTotalAmount] = useState(0);
+  const [checkoutMessage, setCheckoutMessage] = useState(null);
+
 
   useEffect(() => {
     async function fetchCartItems() {
@@ -24,6 +26,20 @@ const Cart = ({ userId,refreshCart, setRefreshCart }) => {
     setTotalAmount(total);
   };
 
+  const handleCheckout = async () => {
+    try {
+      const response = await axios.post(`http://localhost:8887/checkout`, {
+        userId,
+        cartId: `cart-${userId}`,
+        discountCode: null,
+      });
+      setCheckoutMessage(`Checkout successful! Total Amount: $${response.data.totalAmount}`);
+    } catch (error) {
+      setCheckoutMessage('Error during checkout');
+    }
+  };
+
+
   return (
     <div>
       <h2>Your Cart</h2>
@@ -39,7 +55,9 @@ const Cart = ({ userId,refreshCart, setRefreshCart }) => {
             ))}
           </ul>
           <p>Total: ${totalAmount}</p>
-          </>
+          <button onClick={handleCheckout}>Checkout</button>
+          {checkoutMessage && <p>{checkoutMessage}</p>}
+        </>
       )}
     </div>
   );

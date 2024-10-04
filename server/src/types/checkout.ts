@@ -10,5 +10,5 @@ interface CheckoutRequestBody {
 export const CheckoutSchema = Joi.object<CheckoutRequestBody>({
   userId: Joi.string().required(),
   cartId: Joi.string().required(),
-  discountCode:Joi.string().optional(),
+  discountCode:Joi.string().optional().allow(null),
 });
