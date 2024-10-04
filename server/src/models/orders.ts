@@ -12,7 +12,7 @@ export const createOrdersTable = (): Promise<void> => {
                 id TEXT PRIMARY KEY,
                 userId TEXT,
                 items TEXT,
-                discountAmount TEXT
+                discountAmount REAL NOT NULL
                 )
         `,
       (err) => {
@@ -47,6 +47,7 @@ export const addNewOrder = (
   items: Item[],
   discountAmount: number
 ) => {
+  console.log(discountAmount);
   return new Promise<void>((resolve, reject) => {
     db.run(
       `INSERT INTO orders (id,userId,items, discountAmount) VALUES (?, ?, ?,?)`,

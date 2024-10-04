@@ -25,8 +25,8 @@ const mockItems: Item[] = [
 ];
 
 let mockOrders: Order[] = [
-  { id: "1", items: JSON.stringify(mockItems), discountedAmount: 2.2 },
-  { id: "2", items: JSON.stringify(mockItems), discountedAmount: 0 },
+  { id: "1", items: JSON.stringify(mockItems), discountAmount: 2.2 },
+  { id: "2", items: JSON.stringify(mockItems), discountAmount: 0 },
 ];
 
 let mockDiscountCodes = ["dummy1", "dummy2"];
@@ -52,7 +52,7 @@ describe("Get Order Summaries", () => {
 
   it("Given orders have been acheived from database successfully with no discount codes created yet, it should return order summary with success response.", async () => {
     let spied = jest.spyOn(orderdbMethods, "getAllOrders");
-    mockOrders[0].discountedAmount = 0;
+    mockOrders[0].discountAmount = 0;
 
     spied.mockResolvedValue(mockOrders);
 

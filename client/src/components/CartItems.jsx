@@ -5,7 +5,9 @@ const Cart = ({ userId, refreshCart, setRefreshCart }) => {
   const [cartItems, setCartItems] = useState([]);
   const [totalAmount, setTotalAmount] = useState(0);
   const [checkoutMessage, setCheckoutMessage] = useState(null);
-  const [discountCode, setDiscountCode] = useState(null);
+  const [discountCode, setDiscountCode] = useState("");
+  const [discountCodeGenerated, setDiscountCodeGenerated] = useState("");
+
 
   useEffect(() => {
     async function fetchCartItems() {
@@ -33,14 +35,28 @@ const Cart = ({ userId, refreshCart, setRefreshCart }) => {
         cartId: `cart-${userId}`,
         discountCode,
       });
-      setCheckoutMessage(`Checkout successful! Total Amount: $${response.data.totalAmount}`);
+      setCheckoutMessage(`Checkout successful! Total Amount: $${response.data.finalAmount}`);
+      setDiscountCode("");
+      setDiscountCodeGenerated("");
     } catch (error) {
+      console.log(error)
       setCheckoutMessage('Error during checkout');
     }
   };
 
   const handleDiscountChange = (e) => {
     setDiscountCode(e.target.value);
+  };
+
+  const handleDiscountGeneration = async () => {
+    try {
+      const response = await axios.post(`http://localhost:8887/admin/generate-discount`, {
+        nthOrder: 3
+      });
+      setDiscountCodeGenerated(response.data.discountCode)
+    } catch (error) {
+      console.error('Error getting discount code', error);
+    }
   };
 
 
@@ -62,6 +78,8 @@ const Cart = ({ userId, refreshCart, setRefreshCart }) => {
           <p>Total: ${totalAmount}</p>
 
 
+          <button onClick={handleDiscountGeneration}>Lucky to get Discount?</button>
+          {discountCodeGenerated && <p>Yayy!! Your discount Code: {discountCodeGenerated}</p>}
           <input
             type="text"
             placeholder="Discount Code"

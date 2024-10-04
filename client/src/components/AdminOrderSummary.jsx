@@ -33,6 +33,18 @@ const AdminOrderSummary = () => {
                 <p>Total Items Purchased: {summary.itemsPurchased}</p>
                 <p>Total Amount from Purchased Items: ${summary.totalItemsPurchasedAmount}</p>
             </div>
+            <p>Total Discount Amount Applied: ${summary.totalDiscountAmount}</p>
+
+            <h3>Discount Codes Used</h3>
+            {summary.discountCodes.length === 0 ? (
+                <p>No discount codes used.</p>
+            ) : (
+                <ul>
+                    {summary.discountCodes.map((code) => (
+                        <li key={code.id}>{code.code}</li>
+                    ))}
+                </ul>
+            )}
         </div>
     );
 };

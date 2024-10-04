@@ -17,11 +17,12 @@ export const getAdminSummary = async (): Promise<OrdersSummary> => {
     };
 
     for (let order of allOrders) {
+      console.log(order);
       let items: Item[] = JSON.parse(order.items);
       ordersSummary.itemsPurchased =
         ordersSummary.itemsPurchased + items.length;
       ordersSummary.totalDiscountAmount =
-        ordersSummary.totalDiscountAmount + order.discountedAmount;
+        ordersSummary.totalDiscountAmount + order.discountAmount;
       for (let item of items) {
         ordersSummary.totalItemsPurchasedAmount =
           ordersSummary.totalItemsPurchasedAmount + item.price;

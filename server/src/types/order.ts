@@ -1,7 +1,7 @@
 export interface Order {
   id: string;
   items: string;
-  discountedAmount:number;
+  discountAmount:number;
 }
 
 export interface OrdersSummary {
