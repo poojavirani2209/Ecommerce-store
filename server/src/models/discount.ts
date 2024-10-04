@@ -81,6 +81,25 @@ export const getDiscountByCode = async (discountCode: string) => {
   });
 };
 
+export const getDiscountByStatus = async (status: DiscountCodeStatus) => {
+  return new Promise<Discount>(async (resolve, reject) => {
+    db.get(
+      "SELECT * FROM discount_codes WHERE status = ?",
+      [status],
+      (err, discount: Discount) => {
+        console.log(status)
+        if (err) {
+          console.error("Error fetching discount", err.message);
+          reject("Error fetching discount");
+          console.log(err);
+        }
+        console.log(discount);
+        resolve(discount);
+      }
+    );
+  });
+};
+
 export const getAllDiscountsCodes = (): Promise<string[]> => {
   return new Promise<string[]>((resolve, reject) => {
     db.all(

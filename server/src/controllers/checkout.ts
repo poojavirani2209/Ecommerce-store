@@ -57,7 +57,7 @@ const saveOrderOnCheckout = async (
 
 const validateDiscountCode = async (discountCode: string): Promise<number> => {
   let discount: Discount = await getDiscountByCode(discountCode);
-  if (discount) {
+  if (discount && discount.status == DiscountCodeStatus.AVAILABLE) {
     await updateDiscountStatus(discount, DiscountCodeStatus.USED);
     return discount.percent;
   } else {

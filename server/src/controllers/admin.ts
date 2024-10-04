@@ -1,5 +1,11 @@
-import { addNewDiscountCode, getAllDiscountsCodes } from "../models/discount";
+import {
+  addNewDiscountCode,
+  getAllDiscountsCodes,
+  getDiscountByStatus,
+  updateDiscountStatus,
+} from "../models/discount";
 import { getAllOrders, getOrderNumber } from "../models/orders";
+import { Discount, DiscountCodeStatus } from "../types/discount";
 import { Item } from "../types/items";
 import { OrdersSummary } from "../types/order";
 import { v4 as uuidv4 } from "uuid";
@@ -44,6 +50,13 @@ export const generateDiscountCode = async (
     let orderNumber = await getOrderNumber();
     if (shouldBeGivenDiscount(orderNumber, orderToConsiderForDiscount)) {
       const discountCode = uuidv4();
+      let activeDiscount: Discount = await getDiscountByStatus(
+        DiscountCodeStatus.AVAILABLE
+      );
+
+      if (activeDiscount) {
+        await updateDiscountStatus(activeDiscount, DiscountCodeStatus.EXPIRED);
+      }
       await addNewDiscountCode(discountCode, 10);
       return discountCode;
     }
