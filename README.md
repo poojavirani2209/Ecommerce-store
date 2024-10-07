@@ -151,7 +151,7 @@ Once both servers are running, you can access them at the following URL's:
 - Server: http://localhost:8887
 
 ## PostMan Collection
-https://api.postman.com/collections/38763380-c1928138-abb8-484d-b861-d869beb429e5?access_key=PMAT-01J9JNP2RN8YKKR8S8WQMB3ED9
+Available in Ecommerce-store/postmanCollection.json file
 
 ## Authors
 

@@ -1,0 +1,283 @@
+{
+	"info": {
+		"_postman_id": "c1928138-abb8-484d-b861-d869beb429e5",
+		"name": "Collection for ecommce store",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "38763380"
+	},
+	"item": [
+		{
+			"name": "getAllItems",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8887/items"
+			},
+			"response": []
+		},
+		{
+			"name": "Add item to cart for user1",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"items\": [\r\n        {\r\n            \"id\": \"7e0db667-97cd-45bc-9184-b613b23cab60\",\r\n            \"name\": \"Shirt\",\r\n            \"price\": 300,\r\n            \"category\": \"Fashion\"\r\n        },\r\n        {\r\n            \"id\": \"49990a73-2c35-4470-b75b-7229c0cc0284\",\r\n            \"name\": \"Jeans\",\r\n            \"price\": 400,\r\n            \"category\": \"Fashion\"\r\n        },\r\n        {\r\n            \"id\": \"4b9ab5ee-2ff7-4a4c-bc0d-80ad999edd27\",\r\n            \"name\": \"Lipstick\",\r\n            \"price\": 50,\r\n            \"category\": \"Beauty\"\r\n        },\r\n        {\r\n            \"id\": \"c5132dac-57d5-434a-aaab-4589116917f3\",\r\n            \"name\": \"Foundation\",\r\n            \"price\": 100,\r\n            \"category\": \"Beauty\"\r\n        }\r\n    ],\r\n    \"userId\":\"1\"}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8887/cart/add"
+			},
+			"response": []
+		},
+		{
+			"name": "Add item to cart for user2",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"items\": [\r\n        {\r\n            \"id\": \"7e0db667-97cd-45bc-9184-b613b23cab60\",\r\n            \"name\": \"Shirt\",\r\n            \"price\": 300,\r\n            \"category\": \"Fashion\"\r\n        },\r\n        {\r\n            \"id\": \"49990a73-2c35-4470-b75b-7229c0cc0284\",\r\n            \"name\": \"Jeans\",\r\n            \"price\": 400,\r\n            \"category\": \"Fashion\"\r\n        }\r\n    ],\r\n    \"userId\":\"2\"}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8887/cart/add"
+			},
+			"response": []
+		},
+		{
+			"name": "Add item to cart for user3",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"items\": [\r\n        {\r\n            \"id\": \"7e0db667-97cd-45bc-9184-b613b23cab60\",\r\n            \"name\": \"Shirt\",\r\n            \"price\": 300,\r\n            \"category\": \"Fashion\"\r\n        }\r\n    ],\r\n    \"userId\":\"3\"}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8887/cart/add"
+			},
+			"response": []
+		},
+		{
+			"name": "cart for user1",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8887/cart/cart-1"
+			},
+			"response": []
+		},
+		{
+			"name": "cart for user2",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8887/cart/cart-2"
+			},
+			"response": []
+		},
+		{
+			"name": "cart for user3",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8887/cart/cart-3"
+			},
+			"response": []
+		},
+		{
+			"name": "Checkout for user 1 order 1",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"cartId\":\"cart-1\",\r\n    \"userId\":\"1\"}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8887/checkout"
+			},
+			"response": []
+		},
+		{
+			"name": "Admin generate discount for every 2rd order",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"nthOrder\":2}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8887/admin/generate-discount"
+			},
+			"response": []
+		},
+		{
+			"name": "Checkout for user 2 order 2",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"cartId\":\"cart-2\",\r\n    \"userId\":\"2\"}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8887/checkout"
+			},
+			"response": []
+		},
+		{
+			"name": "Admin generate discount, wont generate and this is not nthorder 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Extract and set dynamic variable\", function () {\r",
+							"    var jsonData = pm.response.json(); // Parse the JSON response\r",
+							"    console.log(jsonData);\r",
+							"    \r",
+							"    pm.environment.set(\"discountCode\", jsonData.discountCode); \r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"packages": {},
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"nthOrder\":3}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8887/admin/generate-discount"
+			},
+			"response": []
+		},
+		{
+			"name": "Checkout for user 3 order 3",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"cartId\":\"cart-3\",\r\n    \"userId\":\"3\",\"discountCode\":\"{{discountCode}}\"}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8887/checkout"
+			},
+			"response": []
+		},
+		{
+			"name": "Admin Summary for all the orders till now",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8887/admin/summary"
+			},
+			"response": []
+		}
+	]
+}
